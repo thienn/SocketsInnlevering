@@ -16,7 +16,7 @@ public class ClientUser {
         // We set up the scanner to receive user input
         Scanner scanner = new Scanner(System.in);
         try{
-            Socket socket = new Socket("localhost", 5000);
+            Socket socket = new Socket("localhost", 6143);
             PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

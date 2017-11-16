@@ -15,7 +15,7 @@ public class Server {
 
     public Server() {
         try {
-            final DBHandler program = new DBHandler();
+            DBHandler program = new DBHandler();
             program.getConnection();
             program.dropTable();
             program.createTable();
@@ -29,7 +29,7 @@ public class Server {
             // Ask for user input - Read part
             // program.userInput();
 
-            ServerSocket sSocket = new ServerSocket(5000);
+            ServerSocket sSocket = new ServerSocket(6143);
             // Fjern senere
             System.out.println("Server started at: " + new Date());
 
@@ -72,6 +72,9 @@ public class Server {
                     // This will wait until a line of text has been sent
                     String chatInput = input.readLine();
                     System.out.println(chatInput);
+
+                    String values = chatInput;
+                    readInput(values);
                     /*
                     // Get info sent from Client
                     String clientInput = input.nextLine();
@@ -81,5 +84,11 @@ public class Server {
                 System.out.println("Error: " + e);
             }
         }
+    }
+
+    public void readInput(String values) {
+        // try call on DB
+        DBHandler program = new DBHandler();
+        program.userInputBasic(values);
     }
 }
