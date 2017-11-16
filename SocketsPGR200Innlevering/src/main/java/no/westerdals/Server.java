@@ -52,6 +52,7 @@ public class Server {
     class ClientThread implements Runnable {
 
         Socket threadSocket;
+        String values;
 
         // This constructor will be passed the socket
         public ClientThread(Socket socket){
@@ -73,8 +74,9 @@ public class Server {
                     String chatInput = input.readLine();
                     System.out.println(chatInput);
 
-                    String values = chatInput;
+                    values = chatInput;
                     readInput(values);
+
                     /*
                     // Get info sent from Client
                     String clientInput = input.nextLine();

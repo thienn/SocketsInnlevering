@@ -175,14 +175,19 @@ public class DBHandler {
     }
 
     void userInputBasic(String values) {
-        try (Connection con = getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM EMNER");
-            rs = stmt.executeQuery("SELECT * FROM EMNER");
-            readTablePrint(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(values.equals("1")) {
+            try (Connection con = getConnection()){
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM EMNER");
+                rs = stmt.executeQuery("SELECT * FROM EMNER");
+                readTablePrint(rs);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Nothing");
         }
+
     }
 
 

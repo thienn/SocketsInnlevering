@@ -1,9 +1,6 @@
 package no.westerdals;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -24,16 +21,30 @@ public class ClientUser {
             String inputString = input.readLine();
             System.out.println(inputString);
 
-            //Code that will run the client, this iwll continue to look for input form user then
+            //Code that will run the client, this will continue to look for input from user then
             // send that info to the server
             while(true) {
                 String userInput = scanner.nextLine();
                 // Now we write it to the server
                 output.println(userInput);
+
             }
+
+            /*
+            //Get response from server
+            String response;
+            while ((response = input.readLine()) != null)
+            {
+                System.out.println( response );
+            }
+            */
+
+
 
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
+
+
     }
 }
