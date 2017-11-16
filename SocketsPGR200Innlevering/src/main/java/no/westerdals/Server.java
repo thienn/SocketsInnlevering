@@ -15,6 +15,20 @@ public class Server {
 
     public Server() {
         try {
+            final DBHandler program = new DBHandler();
+            program.getConnection();
+            program.dropTable();
+            program.createTable();
+            // Runs through method for reading from CSV File
+            try {
+                program.readFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Setup of DB and populating successful");
+            // Ask for user input - Read part
+            // program.userInput();
+
             ServerSocket sSocket = new ServerSocket(5000);
             // Fjern senere
             System.out.println("Server started at: " + new Date());
