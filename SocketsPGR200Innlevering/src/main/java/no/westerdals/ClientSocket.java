@@ -15,7 +15,7 @@ public class ClientSocket {
         fromClient = new DataInputStream(socket.getInputStream());
         toClient = new DataOutputStream(socket.getOutputStream());
 
-        client.setSoTimeout(5000);
+       // client.setSoTimeout(5000);
     }
 
     public String receive() throws IOException {

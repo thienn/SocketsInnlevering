@@ -174,4 +174,24 @@ public class DBHandler {
         }
     }
 
+    void userInputBasic() {
+        int values;
+        Scanner input = new Scanner(System.in);
+        System.out.println("If you want all of the subjects out type 1, if you want a specific one type 2: ");
+        try (Connection con = getConnection()){
+            values = input.nextInt();
+            if(values == 1) {
+                readTable();
+            } else if (values == 2) {
+                System.out.println("Nothing");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Input invalid - need to be 1 or 2");
+            userInputBasic();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

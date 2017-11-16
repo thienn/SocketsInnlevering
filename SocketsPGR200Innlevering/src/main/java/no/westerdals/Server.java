@@ -1,78 +1,71 @@
 package no.westerdals;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Date;
 
 public class Server {
-    public final static String HOST = "127.0.0.1";
-    public final static int PORT = 6143;
-
-    private ServerSocket server;
-
-    // Client Stuff
-    private ArrayList<ClientSocket> connectedClients = new ArrayList<>();
-    private Thread clientAcceptanceThread;
-
-    public Server() {
-        try {
-            // DB related
-            DBHandler program = new DBHandler();
-            program.getConnection();
-            program.dropTable();
-            program.createTable();
-            // Runs through method for reading from CSV File
-            try {
-                program.readFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Setup of DB and populating successful");
-            // Ask for user input - Read part
-           // program.userInput();
-
-
-            server = new ServerSocket(Server.PORT);
-
-            // Start accepting clients
-            (clientAcceptanceThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(true) {
-                        try{
-                            // Accept a new client
-                            System.out.println("Listening for new clients..");
-
-                            ClientSocket newClient = new ClientSocket(server.accept());
-
-                            System.out.println("New client accepted");
-
-                            connectedClients.add(newClient);
-
-                            newClient.send("Welcome to server...");
-                            System.out.println(newClient.receive());
-
-                        } catch (IOException e) {
-                            e.printStackTrace(System.err);
-                        }
-                    }
-                }
-            }, "Client acceptance thread")).start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
     public static void main(String[] args) {
         new Server();
     }
 
-    public void checkDB() {
+    public Server() {
+        try {
+            ServerSocket sSocket = new ServerSocket(5000);
+            // Fjern senere
+            System.out.println("Server started at: " + new Date());
+
+            //Loop that runs server functions
+            while(true) {
+                Socket socket = sSocket.accept();
+
+                ClientThread cT = new ClientThread(socket);
+
+                new Thread(cT).start();
+
+            }
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
+        }
 
     }
 
+    // We need to use "Implements runnable to tell java that this is a thread
+    class ClientThread implements Runnable {
+
+        Socket threadSocket;
+
+        // This constructor will be passed the socket
+        public ClientThread(Socket socket){
+            threadSocket = socket;
+        }
+        // This run method is what is executed when the thread starts
+        public void run(){
+            //Set up the PrintWriter and BufferReader here
+            try {
+                // Create the streams
+                PrintWriter output = new PrintWriter(threadSocket.getOutputStream(), true);
+                BufferedReader input = new BufferedReader(new InputStreamReader(threadSocket.getInputStream()));
+
+                // Tell the client that he/she has connected
+                output.println("You have connected at :" + new Date());
+
+                while(true) {
+                    // This will wait until a line of text has been sent
+                    String chatInput = input.readLine();
+                    System.out.println(chatInput);
+                    /*
+                    // Get info sent from Client
+                    String clientInput = input.nextLine();
+                    */
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e);
+            }
+        }
+    }
 }
