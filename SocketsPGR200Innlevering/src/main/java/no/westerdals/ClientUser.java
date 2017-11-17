@@ -27,24 +27,22 @@ public class ClientUser {
                 String userInput = scanner.nextLine();
                 // Now we write it to the server
                 output.println(userInput);
-                break;
-            }
-            //Get response from server
-            String response;
-            while ((response = input.readLine()) != null)
-            {
-                System.out.println( response );
+               // break;
+                String response = (String) input.readLine();
+                System.out.println(response);
+
 
             }
-
             /*
             //Get response from server
             String response;
             while ((response = input.readLine()) != null)
             {
                 System.out.println( response );
+
             }
             */
+
 
         } catch (IOException e) {
             System.out.println("Error: " + e);

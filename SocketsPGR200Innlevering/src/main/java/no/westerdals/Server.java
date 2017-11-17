@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Server {
@@ -77,6 +78,8 @@ public class Server {
 
                     values = chatInput;
                     readInput(values);
+
+
                     output.println(values);
 
                     /*
@@ -94,5 +97,7 @@ public class Server {
         // try call on DB
         DBHandler program = new DBHandler();
         program.userInputBasic2(values);
+
     }
+
 }
