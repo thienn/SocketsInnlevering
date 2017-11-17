@@ -17,7 +17,6 @@ public class DBHandler {
 
     private Properties properties;
 
-
     public DBHandler() {
         try
         {
@@ -36,7 +35,6 @@ public class DBHandler {
             e.printStackTrace();
         }
     }
-
 
     public Connection getConnection() {
         MysqlDataSource ds = new MysqlDataSource();
@@ -61,9 +59,8 @@ public class DBHandler {
                     + "starttime varchar(20),"
                     + "endtime varchar(20)"
                     + ");";
-            Statement stmt = con.createStatement();
 
-            stmt = con.createStatement();
+            Statement stmt = con.createStatement();
             stmt.execute(q);
             System.out.println("Successfully created table");
             stmt.close();
@@ -84,37 +81,6 @@ public class DBHandler {
         }
     }
 
-    void readTable() {
-        try (Connection con = getConnection()){
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM EMNER");
-            rs = stmt.executeQuery("SELECT * FROM EMNER");
-            readTablePrint(rs);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    void readTablePrint(ResultSet rs) {
-        try {
-            while(rs.next()) {
-                String name = rs.getString("name");
-                String subjectid = rs.getString("subjectid");
-                String lecturer = rs.getString("lecturer");
-                String starttime = rs.getString("starttime");
-                String endtime = rs.getString("endtime");
-
-                System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Table read - Finished");
-
-    }
-
     // Reference for importing of CSV - https://coderanch.com/t/572623/databases/insert-CSV-values-file-MySQL
     //Read from CSV File and input to DB
     void readFile() throws IOException {
@@ -124,7 +90,7 @@ public class DBHandler {
             //Open a file input stream for CSV - Towards a specific file
             BufferedReader CSVreader = new BufferedReader(new FileReader("Emner.csv"));
 
-            String lineRead; //line read from csv
+            String lineRead;
             Scanner scanner;
 
             CSVreader.readLine(); //ignores the first line
@@ -133,6 +99,7 @@ public class DBHandler {
             try {
                 while ((lineRead = CSVreader.readLine()) != null) {
                     scanner = new Scanner(lineRead);
+                    // separator for next in CSV file (can change depending on file-type)
                     scanner.useDelimiter(";");
                     while (scanner.hasNext()) {
                         try {
@@ -143,7 +110,7 @@ public class DBHandler {
                             stmt.setString(5, scanner.next());
                             stmt.executeUpdate();
                         } catch (NoSuchElementException e) {
-
+                            e.printStackTrace();
                         }
                     }
 
@@ -163,57 +130,15 @@ public class DBHandler {
         }
     }
 
-    void userInput() {
-        int values;
-        int check;
-        Scanner input = new Scanner(System.in);
-        System.out.println("If you want all of the subjects out type 1, if you want a specific one type 2: ");
-        try (Connection con = getConnection()){
-            values = input.nextInt();
-            if(values == 1) {
-                readTable();
-            } else if (values == 2) {
-                System.out.println("Which subject do you want - (Use subjectid)? ");
-                String emnekode = input.next();
-                try {
-                    String subjectid = emnekode;
-                    PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
-                    prepStmt.setString(1, subjectid);
-                    ResultSet rs = prepStmt.executeQuery();
-                    readTablePrint(rs);
-                    System.out.println("Want to check again? 1 for yes, 2 for exit");
-                    check = input.nextInt();
-                    if(check == 1) {
-                        userInput();
-                    } else if (check == 2) {
-                        System.exit(0);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        } catch (InputMismatchException e) {
-            System.out.println("Input invalid - need to be 1 or 2");
-            userInput();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String clientInput(String values) {
-        String emnekode = values;
+        String subjectid = values;
         String message = null;
-       /* if(values.equals("All") || values.equals("all")) {
-            readTable();
-        } else {
-        */
+
             try (Connection con = getConnection()) {
-                String subjectid = emnekode;
                 PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
                 prepStmt.setString(1, subjectid);
                 ResultSet rs = prepStmt.executeQuery();
 
-                //
                 while(rs.next()) {
                     String name = rs.getString("name");
                     subjectid = rs.getString("subjectid");
@@ -222,26 +147,11 @@ public class DBHandler {
                     String endtime = rs.getString("endtime");
 
                     message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
-            //        System.out.println("Print Message " + message);
-
-                //    System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
                 }
-         //       System.out.println("return 1" + message);
                 return message;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
-               // readTablePrint(rs);
-              //  message = readTablePrint(message);
-        /*    } catch (SQLException e) {
-                e.printStackTrace();
-            } */
-     //   System.out.println("return 2" + message);
             return message;
-       // }
     }
-
-
 }
