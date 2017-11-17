@@ -222,11 +222,11 @@ public class DBHandler {
                     String endtime = rs.getString("endtime");
 
                     message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
-                    System.out.println("Print Message " + message);
+            //        System.out.println("Print Message " + message);
 
                 //    System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
                 }
-                System.out.println("return 1" + message);
+         //       System.out.println("return 1" + message);
                 return message;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -238,7 +238,7 @@ public class DBHandler {
         /*    } catch (SQLException e) {
                 e.printStackTrace();
             } */
-        System.out.println("return 2" + message);
+     //   System.out.println("return 2" + message);
             return message;
        // }
     }

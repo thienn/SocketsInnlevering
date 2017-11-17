@@ -69,7 +69,7 @@ public class Server {
 
                 // Tell the client that he/she has connected
                // output.println("You have connected at :" + new Date());
-                output.println("What do you want to search up? Commands: All (For full table) or SubjectID: ");
+                output.println("What do you want to search up? (Use SubjectID): ");
 
                 while(true) {
                     // This will wait until a line of text has been sent
@@ -124,7 +124,7 @@ public class Server {
 
         //Store into array - then return
 
-        System.out.println("Test: " + message);
+     //   System.out.println("Test: " + message);
         return message;
 
     }
