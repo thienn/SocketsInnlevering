@@ -95,7 +95,8 @@ public class DBHandler {
         }
     }
 
-    void readTablePrint(ResultSet rs) {
+    public String readTablePrint(ResultSet rs) {
+        String message = null;
         try {
             ArrayList<Subject> subjectlist = new ArrayList<>();
             while(rs.next()) {
@@ -110,13 +111,18 @@ public class DBHandler {
                 subjectlist.add(subject);
                 */
 
+                message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
+
                 System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Table read - Finished");
+
+        System.out.println("Print message: " + message);
+        return message;
+        //System.out.println("Table read - Finished");
 
     }
 
@@ -181,7 +187,6 @@ public class DBHandler {
                 System.out.println("Which subject do you want - (Use subjectid)? ");
                 String emnekode = input.next();
                 try {
-                    // Next make sure this goes into a loop, if invalid, report back to user, then ask for another value
                     String subjectid = emnekode;
                     PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
                     prepStmt.setString(1, subjectid);
@@ -206,8 +211,9 @@ public class DBHandler {
         }
     }
 
-    void userInputBasic2(String values) {
+    public String userInputBasic2(String values) {
         String emnekode = values;
+        String message = null;
        /* if(values.equals("All") || values.equals("all")) {
             readTable();
         } else {
@@ -217,10 +223,34 @@ public class DBHandler {
                 PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
                 prepStmt.setString(1, subjectid);
                 ResultSet rs = prepStmt.executeQuery();
-                readTablePrint(rs);
+
+                //
+                while(rs.next()) {
+                    String name = rs.getString("name");
+                    subjectid = rs.getString("subjectid");
+                    String lecturer = rs.getString("lecturer");
+                    String starttime = rs.getString("starttime");
+                    String endtime = rs.getString("endtime");
+
+                    message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
+                    System.out.println("Print Message " + message);
+
+                //    System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
+                }
+                System.out.println("return 1" + message);
+                return message;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+
+               // readTablePrint(rs);
+              //  message = readTablePrint(message);
+        /*    } catch (SQLException e) {
+                e.printStackTrace();
+            } */
+        System.out.println("return 2" + message);
+            return message;
        // }
     }
 

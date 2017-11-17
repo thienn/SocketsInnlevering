@@ -77,8 +77,8 @@ public class Server {
 
                     values = chatInput;
 
-                    // If server get null from a specific thread (Client) it stops it.
-                    // Ensures that the server doesn't crash
+                    // If server get null from a specific thread (Client) it that specific thread.
+                    // Ensures that the server doesn't crash and only prints null once.
                     if (values == null) {
                         Thread.currentThread().stop();
                     } else {
@@ -110,14 +110,16 @@ public class Server {
     }
 
     // Handles the communication with the DBHandler
-    public void readInput(String values) {
+    public String readInput(String values) {
+        String message = null;
         DBHandler program = new DBHandler();
         // try call on DB
         program.userInputBasic2(values);
-
-
+        message = values;
         //Store into array - then return
 
+        System.out.println("Test: " + message);
+        return message;
 
     }
 
