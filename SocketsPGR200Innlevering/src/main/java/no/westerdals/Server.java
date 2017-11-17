@@ -121,38 +121,10 @@ public class Server {
     public String readInput(String values) {
         String message = null;
         DBHandler program = new DBHandler();
-        String emnekode;
-        emnekode = values;
-        /*
+
         // try call on DB
         program.userInputBasic2(values);
-        message = values;
-        */
-        try (Connection con = program.getConnection()){
-            String subjectid = emnekode;
-            PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
-            prepStmt.setString(1, subjectid);
-            ResultSet rs = prepStmt.executeQuery();
-
-            //
-            while(rs.next()) {
-                String name = rs.getString("name");
-                subjectid = rs.getString("subjectid");
-                String lecturer = rs.getString("lecturer");
-                String starttime = rs.getString("starttime");
-                String endtime = rs.getString("endtime");
-
-                message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
-                System.out.println("Print Message " + message);
-
-            }
-            System.out.println("return 1" + message);
-            values = message;
-            System.out.println("values: " + values);
-            return values;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        message = program.userInputBasic2(values);
 
         //Store into array - then return
 

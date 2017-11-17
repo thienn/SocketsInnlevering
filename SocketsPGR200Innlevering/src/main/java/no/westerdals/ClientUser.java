@@ -31,6 +31,8 @@ public class ClientUser {
                 String response = (String) input.readLine();
                 System.out.println(response);
 
+                System.out.println("Next?");
+
 
             }
             /*

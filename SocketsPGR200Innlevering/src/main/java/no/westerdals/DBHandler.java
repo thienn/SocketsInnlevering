@@ -98,18 +98,12 @@ public class DBHandler {
     public String readTablePrint(ResultSet rs) {
         String message = null;
         try {
-            ArrayList<Subject> subjectlist = new ArrayList<>();
             while(rs.next()) {
                 String name = rs.getString("name");
                 String subjectid = rs.getString("subjectid");
                 String lecturer = rs.getString("lecturer");
                 String starttime = rs.getString("starttime");
                 String endtime = rs.getString("endtime");
-
-                /*
-                Subject subject = new Subject(rs.getString("name"),rs.getString("subjectid"), rs.getString("lecturer"), rs.getString("starttime", rs.getString("endtime");
-                subjectlist.add(subject);
-                */
 
                 message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
 
