@@ -3,6 +3,10 @@ package no.westerdals;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Server {
@@ -50,6 +54,7 @@ public class Server {
 
         Socket threadSocket;
         String values;
+        String message;
 
         // This constructor will be passed the socket
         public ClientThread(Socket socket){
@@ -83,12 +88,15 @@ public class Server {
                         Thread.currentThread().stop();
                     } else {
                         readInput(values);
+
+                        message = readInput(values);
                                         /*
                     Something that makes the data taken form readInput into a Array or so
                     Then make that presentable before sending it back to client.
                      */
+                        //values = readInput(message);
 
-                        output.println("Your result: " + values);
+                        output.println("Your result: " + message);
                     }
 
 
@@ -113,9 +121,39 @@ public class Server {
     public String readInput(String values) {
         String message = null;
         DBHandler program = new DBHandler();
+        String emnekode;
+        emnekode = values;
+        /*
         // try call on DB
         program.userInputBasic2(values);
         message = values;
+        */
+        try (Connection con = program.getConnection()){
+            String subjectid = emnekode;
+            PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
+            prepStmt.setString(1, subjectid);
+            ResultSet rs = prepStmt.executeQuery();
+
+            //
+            while(rs.next()) {
+                String name = rs.getString("name");
+                subjectid = rs.getString("subjectid");
+                String lecturer = rs.getString("lecturer");
+                String starttime = rs.getString("starttime");
+                String endtime = rs.getString("endtime");
+
+                message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
+                System.out.println("Print Message " + message);
+
+            }
+            System.out.println("return 1" + message);
+            values = message;
+            System.out.println("values: " + values);
+            return values;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         //Store into array - then return
 
         System.out.println("Test: " + message);
