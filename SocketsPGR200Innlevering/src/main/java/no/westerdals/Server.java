@@ -67,7 +67,8 @@ public class Server {
                 BufferedReader input = new BufferedReader(new InputStreamReader(threadSocket.getInputStream()));
 
                 // Tell the client that he/she has connected
-                output.println("You have connected at :" + new Date());
+               // output.println("You have connected at :" + new Date());
+                output.println("What do you want to search up? Commands: All (For full table) or SubjectID: ");
 
                 while(true) {
                     // This will wait until a line of text has been sent
@@ -76,6 +77,7 @@ public class Server {
 
                     values = chatInput;
                     readInput(values);
+                    output.println(values);
 
                     /*
                     // Get info sent from Client
@@ -91,6 +93,6 @@ public class Server {
     public void readInput(String values) {
         // try call on DB
         DBHandler program = new DBHandler();
-        program.userInputBasic(values);
+        program.userInputBasic2(values);
     }
 }

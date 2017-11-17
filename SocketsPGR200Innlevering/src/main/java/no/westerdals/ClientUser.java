@@ -27,6 +27,13 @@ public class ClientUser {
                 String userInput = scanner.nextLine();
                 // Now we write it to the server
                 output.println(userInput);
+                break;
+            }
+            //Get response from server
+            String response;
+            while ((response = input.readLine()) != null)
+            {
+                System.out.println( response );
 
             }
 
@@ -39,12 +46,11 @@ public class ClientUser {
             }
             */
 
-
-
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
 
 
     }
+
 }

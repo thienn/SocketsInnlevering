@@ -174,20 +174,23 @@ public class DBHandler {
         }
     }
 
-    void userInputBasic(String values) {
-        if(values.equals("1")) {
-            try (Connection con = getConnection()){
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM EMNER");
-                rs = stmt.executeQuery("SELECT * FROM EMNER");
+    void userInputBasic2(String values) {
+        String emnekode = values;
+        if(values.equals("All") || values.equals("all")) {
+            readTable();
+        } else {
+            try (Connection con = getConnection()) {
+                // Next make sure this goes into a loop, if invalid, report back to user, then ask for another value
+                String subjectid = emnekode;
+                PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
+                prepStmt.setString(1, subjectid);
+                ResultSet rs = prepStmt.executeQuery();
                 readTablePrint(rs);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("Nothing");
         }
-
     }
 
 
