@@ -218,7 +218,6 @@ public class DBHandler {
                 prepStmt.setString(1, subjectid);
                 ResultSet rs = prepStmt.executeQuery();
                 readTablePrint(rs);
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

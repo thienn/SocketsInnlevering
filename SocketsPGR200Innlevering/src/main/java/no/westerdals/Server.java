@@ -76,14 +76,21 @@ public class Server {
                     System.out.println(chatInput);
 
                     values = chatInput;
-                    readInput(values);
 
-                    /*
+                    // If server get null from a specific thread (Client) it stops it.
+                    // Ensures that the server doesn't crash
+                    if (values == null) {
+                        Thread.currentThread().stop();
+                    } else {
+                        readInput(values);
+                                        /*
                     Something that makes the data taken form readInput into a Array or so
                     Then make that presentable before sending it back to client.
                      */
 
-                    output.println("Your result: " + values);
+                        output.println("Your result: " + values);
+                    }
+
 
                     /*
                     // Get info sent from Client
@@ -110,8 +117,6 @@ public class Server {
 
 
         //Store into array - then return
-
-
 
 
     }
