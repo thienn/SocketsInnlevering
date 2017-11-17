@@ -3,22 +3,52 @@ package no.westerdals;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class DBHandler {
+    private static String dbName;
+    private static String serverName;
+    private static String userName;
+    private static String password;
+
+
+
+    private Properties properties;
+
+
+    public DBHandler() {
+        try
+        {
+            properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream("config.properties");
+            properties.load(fileInputStream);
+            dbName = properties.getProperty("dbName");
+            serverName = properties.getProperty("serverName");
+            userName = properties.getProperty("userName");
+            password = properties.getProperty("password");
+
+            fileInputStream.close();
+
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
 
     public Connection getConnection() {
         MysqlDataSource ds = new MysqlDataSource();
-        ds.setDatabaseName("myDB");
-        ds.setServerName("localhost");
-        ds.setUser("root");
-        ds.setPassword("gamer1234");
+        ds.setDatabaseName(dbName);
+        ds.setServerName(serverName);
+        ds.setUser(userName);
+        ds.setPassword(password);
         Connection con = null;
         try {
             con = ds.getConnection();

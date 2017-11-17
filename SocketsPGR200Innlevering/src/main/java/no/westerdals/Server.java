@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Server {
@@ -79,6 +78,10 @@ public class Server {
                     values = chatInput;
                     readInput(values);
 
+                    /*
+                    Something that makes the data taken form readInput into a Array or so
+                    Then make that presentable before sending it back to client.
+                     */
 
                     output.println(values);
 
