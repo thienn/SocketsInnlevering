@@ -95,8 +95,7 @@ public class DBHandler {
         }
     }
 
-    public String readTablePrint(ResultSet rs) {
-        String message = null;
+    void readTablePrint(ResultSet rs) {
         try {
             while(rs.next()) {
                 String name = rs.getString("name");
@@ -105,8 +104,6 @@ public class DBHandler {
                 String starttime = rs.getString("starttime");
                 String endtime = rs.getString("endtime");
 
-                message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
-
                 System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
             }
 
@@ -114,9 +111,7 @@ public class DBHandler {
             e.printStackTrace();
         }
 
-        System.out.println("Print message: " + message);
-        return message;
-        //System.out.println("Table read - Finished");
+        System.out.println("Table read - Finished");
 
     }
 
@@ -205,7 +200,7 @@ public class DBHandler {
         }
     }
 
-    public String userInputBasic2(String values) {
+    public String clientInput(String values) {
         String emnekode = values;
         String message = null;
        /* if(values.equals("All") || values.equals("all")) {

@@ -3,10 +3,6 @@ package no.westerdals;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class Server {
@@ -90,13 +86,13 @@ public class Server {
                         readInput(values);
 
                         message = readInput(values);
-                                        /*
-                    Something that makes the data taken form readInput into a Array or so
-                    Then make that presentable before sending it back to client.
-                     */
-                        //values = readInput(message);
 
-                        output.println("Your result: " + message);
+                      //  if(message.equals(null)){
+                     //       output.println("Invalid input");
+                      //  } else {
+                            output.println("Your result: " + message);
+                       // }
+
                     }
 
 
@@ -122,9 +118,9 @@ public class Server {
         String message = null;
         DBHandler program = new DBHandler();
 
-        // try call on DB
-        program.userInputBasic2(values);
-        message = program.userInputBasic2(values);
+        // Send query to DBHandler for method clientInput
+        program.clientInput(values);
+        message = program.clientInput(values);
 
         //Store into array - then return
 
