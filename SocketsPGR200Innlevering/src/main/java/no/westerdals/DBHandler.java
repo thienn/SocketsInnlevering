@@ -7,18 +7,13 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.Scanner;
+import java.util.*;
 
 public class DBHandler {
     private static String dbName;
     private static String serverName;
     private static String userName;
     private static String password;
-
-
 
     private Properties properties;
 
@@ -102,6 +97,7 @@ public class DBHandler {
 
     void readTablePrint(ResultSet rs) {
         try {
+            ArrayList<Subject> subjectlist = new ArrayList<>();
             while(rs.next()) {
                 String name = rs.getString("name");
                 String subjectid = rs.getString("subjectid");
@@ -109,8 +105,14 @@ public class DBHandler {
                 String starttime = rs.getString("starttime");
                 String endtime = rs.getString("endtime");
 
+                /*
+                Subject subject = new Subject(rs.getString("name"),rs.getString("subjectid"), rs.getString("lecturer"), rs.getString("starttime", rs.getString("endtime");
+                subjectlist.add(subject);
+                */
+
                 System.out.println("Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime );
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Server {
@@ -62,6 +65,9 @@ public class Server {
         public void run(){
             //Set up the PrintWriter and BufferReader here
             try {
+                DBHandler program = new DBHandler();
+                program.getConnection();
+
                 // Create the streams
                 PrintWriter output = new PrintWriter(threadSocket.getOutputStream(), true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(threadSocket.getInputStream()));
@@ -96,10 +102,13 @@ public class Server {
         }
     }
 
+    // Handles the communication with the DBHandler
     public void readInput(String values) {
         // try call on DB
         DBHandler program = new DBHandler();
         program.userInputBasic2(values);
+        //Store into array - then return
+        
 
     }
 
