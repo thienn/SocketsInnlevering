@@ -23,11 +23,9 @@ public class Server {
                 e.printStackTrace();
             }
             System.out.println("Setup of DB and populating successful");
-            // Ask for user input - Read part
-            // program.userInput();
 
+            // Socket setup
             ServerSocket sSocket = new ServerSocket(6143);
-            // Fjern senere
             System.out.println("Server started at: " + new Date());
 
             //Loop that runs server functions
@@ -45,7 +43,6 @@ public class Server {
 
     }
 
-    // We need to use "Implements runnable to tell java that this is a thread
     class ClientThread implements Runnable {
 
         Socket threadSocket;
@@ -56,9 +53,9 @@ public class Server {
         public ClientThread(Socket socket){
             threadSocket = socket;
         }
-        // This run method is what is executed when the thread starts
+
+        // This run method is what is executed when the thread starts - new for every client
         public void run(){
-            //Set up the PrintWriter and BufferReader here
             try {
                 DBHandler program = new DBHandler();
                 program.getConnection();
@@ -67,9 +64,11 @@ public class Server {
                 PrintWriter output = new PrintWriter(threadSocket.getOutputStream(), true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(threadSocket.getInputStream()));
 
-                // Tell the client that he/she has connected
-               // output.println("You have connected at :" + new Date());
-                output.println("What do you want to search up? (Use SubjectID): ");
+                /*
+                Tell the client that he/she has connected
+                output.println("You have connected at :" + new Date());
+               */
+                output.println("Connected to server - What do you want to search up? (Use SubjectID): ");
 
                 while(true) {
                     // This will wait until a line of text has been sent
@@ -86,26 +85,10 @@ public class Server {
                         readInput(values);
 
                         message = readInput(values);
-
-                      //  if(message.equals(null)){
-                     //       output.println("Invalid input");
-                      //  } else {
-                            output.println("Your result: " + message);
-                       // }
-
+                        // Should wrap into something in case of invalid input to report back to user to type a valid one
+                        // At the moment it only gives null back and continues
+                        output.println("Your result: " + message);
                     }
-
-
-                    /*
-                    // Get info sent from Client
-                    String clientInput = input.nextLine();
-                    */
-
-                    /*
-                    if(input.readLine() == null) {
-                        threadSocket.close();
-                    }
-                    */
                 }
             } catch (IOException e) {
                 System.out.println("Error: " + e);
@@ -115,18 +98,15 @@ public class Server {
 
     // Handles the communication with the DBHandler
     public String readInput(String values) {
-        String message = null;
+        String message;
         DBHandler program = new DBHandler();
 
         // Send query to DBHandler for method clientInput
         program.clientInput(values);
         message = program.clientInput(values);
 
-        //Store into array - then return
-
-     //   System.out.println("Test: " + message);
+        //return to run
         return message;
-
     }
 
 }

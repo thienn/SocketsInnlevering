@@ -152,6 +152,6 @@ public class DBHandler {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return message;
+        return message;
     }
 }
