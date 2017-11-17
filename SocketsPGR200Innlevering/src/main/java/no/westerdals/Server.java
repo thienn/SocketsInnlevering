@@ -1,14 +1,8 @@
 package no.westerdals;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Server {
@@ -89,11 +83,17 @@ public class Server {
                     Then make that presentable before sending it back to client.
                      */
 
-                    output.println(values);
+                    output.println("Your result: " + values);
 
                     /*
                     // Get info sent from Client
                     String clientInput = input.nextLine();
+                    */
+
+                    /*
+                    if(input.readLine() == null) {
+                        threadSocket.close();
+                    }
                     */
                 }
             } catch (IOException e) {
@@ -104,11 +104,15 @@ public class Server {
 
     // Handles the communication with the DBHandler
     public void readInput(String values) {
-        // try call on DB
         DBHandler program = new DBHandler();
+        // try call on DB
         program.userInputBasic2(values);
+
+
         //Store into array - then return
-        
+
+
+
 
     }
 

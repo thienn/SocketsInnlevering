@@ -208,11 +208,11 @@ public class DBHandler {
 
     void userInputBasic2(String values) {
         String emnekode = values;
-        if(values.equals("All") || values.equals("all")) {
+       /* if(values.equals("All") || values.equals("all")) {
             readTable();
         } else {
+        */
             try (Connection con = getConnection()) {
-                // Next make sure this goes into a loop, if invalid, report back to user, then ask for another value
                 String subjectid = emnekode;
                 PreparedStatement prepStmt = con.prepareStatement("select * from EMNER where subjectid = ?");
                 prepStmt.setString(1, subjectid);
@@ -222,7 +222,7 @@ public class DBHandler {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
+       // }
     }
 
 
