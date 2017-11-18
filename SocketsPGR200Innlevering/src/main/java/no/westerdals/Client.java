@@ -4,6 +4,16 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+/**
+ * Client class that set up connection to server and ask for user input
+ * User can then ask for subjectID as long as they want until they exit on their own
+ *
+ * References for structure on Client taken from
+ * https://hubpages.com/technology/Building-a-server-in-Java-Part-2-Connecting-to-the-server
+ *
+ * @author Thien Cong Pham
+ */
+
 public class Client {
     public static void main(String[] args) {
         new Client();

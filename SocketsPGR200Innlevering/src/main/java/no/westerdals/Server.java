@@ -5,6 +5,21 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ * Server class that is "always" up and wait for clients to connect to it. Multi threading to accept multiple clients
+ * at the same time.
+ *
+ * Connects to Database through DBHandler only when getting a reply from userInput
+ * Then wait for answer from DBHandler and return the String back to Client when possible
+ *
+ * References for structure on Server taken from
+ * https://hubpages.com/technology/How-to-create-a-server-in-Java
+ * Reference for multi threading
+ * https://hubpages.com/technology/How-to-build-a-server-in-Java-Part-3-Allowing-multiple-users-to-connect
+ *
+ * @author Thien Cong Pham
+ */
+
 public class Server {
     public static void main(String[] args) {
         new Server();
@@ -43,13 +58,19 @@ public class Server {
 
     }
 
+    /**
+     * Creates a new thread for every client that connects so they can be handled separately while the server
+     * still runs without interruptions
+     * Handles the input and output to client. When it receives a input from client it passes along to readInput then
+     * when it get back a message it passes that one along to client. Repeated until client decide to close connection
+     */
     class ClientThread implements Runnable {
 
         Socket threadSocket;
         String values;
         String message;
 
-        // This constructor will be passed the socket
+        // This constructor will be passed to the socket
         public ClientThread(Socket socket){
             threadSocket = socket;
         }
@@ -64,10 +85,7 @@ public class Server {
                 PrintWriter output = new PrintWriter(threadSocket.getOutputStream(), true);
                 BufferedReader input = new BufferedReader(new InputStreamReader(threadSocket.getInputStream()));
 
-                /*
-                Tell the client that he/she has connected
-                output.println("You have connected at :" + new Date());
-               */
+                // Respond to client that the connection is successful and then ask about subject
                 output.println("Connected to server - What do you want to search up? (Use SubjectID): ");
 
                 while(true) {
@@ -77,7 +95,7 @@ public class Server {
 
                     values = chatInput;
 
-                    // If server get null from a specific thread (Client) it that specific thread.
+                    // If server get null from a specific thread (Client) it closes that specific thread.
                     // Ensures that the server doesn't crash and only prints null once.
                     if (values == null) {
                         Thread.currentThread().stop();
@@ -97,6 +115,14 @@ public class Server {
     }
 
     // Handles the communication with the DBHandler
+
+    /**
+     * Get input from ClientThread() pass that along to DBHandler calling upon the method clientInput to request information
+     * Waits for answer then passes that along back to ClientThread() run
+     *
+     * @param values Get a user input from ClientThread()
+     * @return message received from DBHandler
+     */
     public String readInput(String values) {
         String message;
         DBHandler program = new DBHandler();
@@ -105,7 +131,7 @@ public class Server {
         program.clientInput(values);
         message = program.clientInput(values);
 
-        //return to run
+        //return to run()
         return message;
     }
 

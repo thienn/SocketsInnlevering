@@ -9,6 +9,20 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Class that connects to a database through JBDC.
+ * Methods that can be called upon.
+ *
+ * References for structure on connection taken from
+ * https://www.youtube.com/watch?v=BOUMR85B-V0 series
+ *
+ * References about properties
+ * https://www.mkyong.com/java/java-properties-file-examples/
+ * https://www.youtube.com/watch?v=-LrmzNDPVx8
+ *
+ * @author Thien Cong Pham
+ */
+
 public class DBHandler {
     private static String dbName;
     private static String serverName;
@@ -81,8 +95,10 @@ public class DBHandler {
         }
     }
 
-    // Reference for importing of CSV - https://coderanch.com/t/572623/databases/insert-CSV-values-file-MySQL
-    //Read from CSV File and input to DB
+    /**
+     * Reads from file "Supports only CSV then insert into a DB accordingly as long as it has a next line
+     * @throws IOException
+     */
     void readFile() throws IOException {
         try (Connection con = getConnection()){
             PreparedStatement stmt = con.prepareStatement("INSERT INTO EMNER VALUES(?,?,?,?,?)");
@@ -130,6 +146,13 @@ public class DBHandler {
         }
     }
 
+    /**
+     *  Method for accepting request from Server then use that request to look up in Database through query
+     *  Afterwards turns that into a String that get returned to server
+     *
+     * @param values get values for subjectID from Server
+     * @return String message to Server
+     */
     public String clientInput(String values) {
         String subjectid = values;
         String message = null;
