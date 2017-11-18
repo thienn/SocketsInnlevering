@@ -35,23 +35,25 @@ public class Client {
             //Code that will run the client, this will continue to look for input from user then
             // send that info to the server
             while(true) {
+                String response;
                 String userInput = scanner.nextLine();
                 // Now we write it to the server
                 output.println(userInput);
                // break;
 
-                String response = (String) input.readLine();
+                if(userInput.equals("YES") || userInput.equals("yes")) {
+                    response = input.readLine();
+                    System.out.println(response);
+                    System.out.println("Client closed");
+                    System.exit(0);
+                }
+                response = input.readLine();
                 System.out.println(response);
 
                 System.out.println("Input next subjectID or quit by typing YES: ");
                 //Add code for if number YES then quit
                 // Convert the YES to all caps so the if sentence can get shorter.
-                if(userInput.equals("YES") || userInput.equals("yes")) {
-                    System.out.println("Client closed");
-                    System.exit(0);
-                } else {
 
-                }
 
             }
 

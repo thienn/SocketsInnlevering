@@ -171,7 +171,14 @@ public class DBHandler {
 
                     message = "Emnenavn: " + name + " Emnekode: " + subjectid + " Foreleser: " + lecturer + " Startdato: " + starttime + " Sluttdato: " + endtime ;
                 }
-                return message;
+                // Check if it message actually contains anything from the DB. If not then return a message else go as normal
+                if(message == null){
+                    message = "Found nothing in DB related to that SubjectID";
+                    return message;
+                } else {
+                    return message;
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }

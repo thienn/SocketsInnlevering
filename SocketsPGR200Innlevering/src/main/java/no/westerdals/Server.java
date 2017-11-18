@@ -99,6 +99,10 @@ public class Server {
                     // Ensures that the server doesn't crash and only prints null once.
                     if (values == null) {
                         Thread.currentThread().stop();
+
+                    } else if(values.equals("YES") || values.equals("yes")) {
+                        output.println("Noted, connection terminated");
+                       // Thread.currentThread().stop();
                     } else {
                         readInput(values);
 
