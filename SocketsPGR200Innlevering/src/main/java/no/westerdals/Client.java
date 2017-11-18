@@ -39,22 +39,20 @@ public class Client {
                 String userInput = scanner.nextLine();
                 // Now we write it to the server
                 output.println(userInput);
-               // break;
 
+                // Checks every time if there is a answer to quit the program if not continue as normal
                 if(userInput.equals("YES") || userInput.equals("yes")) {
                     response = input.readLine();
                     System.out.println(response);
                     System.out.println("Client closed");
                     System.exit(0);
                 }
+
+                //Get back answer from Server
                 response = input.readLine();
                 System.out.println(response);
 
                 System.out.println("Input next subjectID or quit by typing YES: ");
-                //Add code for if number YES then quit
-                // Convert the YES to all caps so the if sentence can get shorter.
-
-
             }
 
         } catch (IOException e) {

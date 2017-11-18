@@ -90,25 +90,22 @@ public class Server {
 
                 while(true) {
                     // This will wait until a line of text has been sent
-                    String chatInput = input.readLine();
-                    System.out.println(chatInput);
+                    String textInput = input.readLine();
+                    System.out.println(textInput);
 
-                    values = chatInput;
+                    values = textInput;
 
                     // If server get null from a specific thread (Client) it closes that specific thread.
                     // Ensures that the server doesn't crash and only prints null once.
                     if (values == null) {
                         Thread.currentThread().stop();
-
                     } else if(values.equals("YES") || values.equals("yes")) {
                         output.println("Noted, connection terminated");
-                       // Thread.currentThread().stop();
+                        Thread.currentThread().stop();
                     } else {
                         readInput(values);
 
                         message = readInput(values);
-                        // Should wrap into something in case of invalid input to report back to user to type a valid one
-                        // At the moment it only gives null back and continues
                         output.println("Your result: " + message);
                     }
                 }
@@ -118,11 +115,11 @@ public class Server {
         }
     }
 
-    // Handles the communication with the DBHandler
-
     /**
      * Get input from ClientThread() pass that along to DBHandler calling upon the method clientInput to request information
      * Waits for answer then passes that along back to ClientThread() run
+     *
+     * Handles the communication with the DBHandler
      *
      * @param values Get a user input from ClientThread()
      * @return message received from DBHandler

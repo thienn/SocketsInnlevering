@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SocketsPGR200Innlevering" target="1.7" />
+      <module name="SocketsPGR200Innlevering" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
